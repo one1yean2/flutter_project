@@ -1,7 +1,6 @@
 import 'dart:async';
-
-import 'package:Flutter_Project/helpers/type_writer.dart';
-import 'package:Flutter_Project/pages/gamepage.dart';
+import '../helpers/type_writer.dart';
+import '../pages/gamepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
