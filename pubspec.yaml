@@ -1,5 +1,5 @@
-name: flutter_project
-description: "A new Flutter project."
+name: Flutter_Project
+description: "Typing Game"
 publish_to: 'none'
 version: 0.1.0
 
@@ -10,11 +10,15 @@ dependencies:
   dio: ^5.4.2+1
   flutter:
     sdk: flutter
+  google_fonts: 6.1.0
+
+
+  # cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  # flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true

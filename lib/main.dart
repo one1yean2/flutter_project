@@ -1,3 +1,6 @@
+import 'package:Flutter_Project/pages/gamepage.dart';
+import 'package:Flutter_Project/pages/homepage.dart';
+import 'package:Flutter_Project/pages/test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,12 +12,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      home: Homepage(),
     );
   }
 }
