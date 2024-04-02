@@ -1,6 +1,4 @@
-import 'package:Flutter_Project/pages/gamepage.dart';
-import 'package:Flutter_Project/pages/homepage.dart';
-import 'package:Flutter_Project/pages/test.dart';
+import '../pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
