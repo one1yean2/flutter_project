@@ -2,12 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../services/api_caller.dart';
 import '../models/quotes.dart';
+import '../services/storage.dart';
 import 'leaderboard.dart';
 
 class GameScreen extends StatefulWidget {
+  final int skip;
+  final int limit;
+
+  GameScreen({
+    Key? key,
+    required this.skip,
+    required this.limit,
+  }) : super(key: key);
+
   @override
   _GameScreenState createState() => _GameScreenState();
 }
@@ -16,10 +27,52 @@ class _GameScreenState extends State<GameScreen> {
   QuotesList _quotes = QuotesList();
   bool _isLoading = true;
   int currentIndex = 0;
-  int _currentIndex = 0;
-  Color textColor = Colors.black;
+  int _score = 0;
   TextEditingController textEditingController = TextEditingController();
   List<TextSpan> _textSpans = [];
+  String textColor = '';
+
+  String? checkText(String text, String value, int index) {
+    if (index != value.length) {
+      if (index < value.length) {
+        if (text[index] == ' ') {
+          return value[index];
+        } else {
+          return text[index];
+        }
+      } else {
+        return text[index];
+      }
+    } else {
+      return text[index];
+    }
+  }
+
+  TextStyle? checkTextStyle(String text, String value, int index) {
+    if (index < value.length) {
+      if (text[index] == value[index]) {
+        setState(() {
+          _score++;
+          textColor += 'G';
+        });
+        return GoogleFonts.poppins(
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        );
+      } else {
+        setState(() {
+          textColor += 'R';
+        });
+        return GoogleFonts.poppins(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        );
+      }
+    } else {
+      return null;
+    }
+  }
+
   List<TextSpan> _buildTextSpans(String text, String value) {
     final textSpans = <TextSpan>[];
     for (int i = 0; i < text.length; i++) {
@@ -36,24 +89,8 @@ class _GameScreenState extends State<GameScreen> {
       }
       textSpans.add(
         TextSpan(
-          text: i != value.length
-              ? i < value.length
-                  ? text[i] == ' '
-                      ? value[i]
-                      : text[i]
-                  : text[i]
-              : text[i],
-          style: i < value.length
-              ? text[i] == value[i]
-                  ? GoogleFonts.poppins(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    )
-                  : GoogleFonts.poppins(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    )
-              : null,
+          text: checkText(text, value, i),
+          style: checkTextStyle(text, value, i),
         ),
       );
     }
@@ -68,11 +105,24 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> fetchQuotes() async {
     try {
-      final data = await ApiCaller().get("https://dummyjson.com", "quotes?skip=5&limit=1");
+      final data = await ApiCaller().get("https://dummyjson.com", "quotes?skip=${widget.skip}&limit=${widget.limit}");
       setState(() {
         _quotes = QuotesList.fromJson(jsonDecode(data));
         _isLoading = false;
         _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> postScore(int id, int score, int time, String typedText) async {
+    try {
+      var data = await ApiCaller().post("http://localhost:3000", 'score', params: {
+        "id": id,
+        "score": score,
+        "time": time,
+        "typedText": typedText,
       });
     } catch (e) {
       print(e);
@@ -119,6 +169,18 @@ class _GameScreenState extends State<GameScreen> {
             // Expanded(
             //   child: SizedBox(),
             // ),
+            Center(
+              child: Container(
+                child: Text(
+                  _score.toString(),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ).animate().slide(duration: Duration(seconds: 1)).fadeIn(duration: Duration(seconds: 1)),
+
             _isLoading
                 ? CircularProgressIndicator()
                 : Padding(
@@ -137,78 +199,50 @@ class _GameScreenState extends State<GameScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
+                          ).animate().fadeIn(duration: Duration(seconds: 1)).slideY(duration: Duration(milliseconds: 500), begin: 0.5),
                           SizedBox(
                             height: 30,
                           ),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              child: TextField(
-                                controller: textEditingController,
-                                onChanged: (value) {
-                                  final newIndex = min(_currentIndex + 1, _quotes.quotes![currentIndex].quote!.length - 1);
-                                  setState(() {
-                                    _currentIndex = newIndex;
+                            margin: EdgeInsets.only(top: 20),
+                            child: TextField(
+                              controller: textEditingController,
+                              autofocus: true,
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    _score = 0;
+                                    textColor = '';
                                     _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, value);
-                                  });
-                                  if (value.length == _quotes.quotes![currentIndex].quote!.length) {
-                                    if (currentIndex == _quotes.quotes!.length - 1) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Leaderboard(),
-                                        ),
-                                      );
-                                    } else {
-                                      setState(() {
+                                  },
+                                );
+                                if (value.length == _quotes.quotes![currentIndex].quote!.length) {
+                                  postScore(_quotes.quotes![currentIndex].id!, _score, 999, value);
+                                  if (currentIndex == _quotes.quotes!.length - 1) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Leaderboard(),
+                                      ),
+                                    );
+                                  } else {
+                                    setState(
+                                      () {
                                         currentIndex = currentIndex + 1;
-                                        _currentIndex = 0;
+
                                         _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
                                         textEditingController.clear();
-                                      });
-                                    }
+                                      },
+                                    );
                                   }
-                                  // }
-                                },
-                                decoration: InputDecoration(
-                                  labelText: 'Type Here',
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-
-                              // child: TextField(
-                              //   maxLines: null,
-                              //   minLines: 1,
-                              //   controller: textEditingController,
-                              //   decoration: InputDecoration(),
-                              //   onChanged: (value) {
-                              //     int inputLength = value.length;
-
-                              //     if (_quotes.quotes![currentIndex].quote!.substring(0, inputLength) == value) {
-                              //       setState(() {
-                              //         //change color of text
-                              //         textColor = Colors.green;
-                              //       });
-                              //     } else {
-                              //       setState(() {
-                              //         textColor = Colors.red;
-                              //       });
-                              //     }
-                              //     if (value == _quotes.quotes![currentIndex].quote!) {
-                              //       setState(() {
-                              //         currentIndex = currentIndex + 1;
-                              //         textEditingController.clear();
-                              //       });
-                              //     }
-                              //   },
-                              //   autofocus: true,
-                              //   style: TextStyle(
-                              //     color: textColor,
-                              //     fontSize: 30,
-                              //     fontWeight: FontWeight.normal,
-                              //   ),
-                              // ),
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Type Here',
+                                border: OutlineInputBorder(),
                               ),
+                            ),
+                          ).animate().fadeIn().slideY(duration: Duration(milliseconds: 700), begin: 1),
                         ],
                       ),
                     ),

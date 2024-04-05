@@ -9,10 +9,12 @@ import "package:google_fonts/google_fonts.dart";
 class Button extends StatefulWidget {
   final String actualText;
   final VoidCallback? onPressed;
+  final double textSize;
   Button({
     Key? key,
     required this.actualText,
     required this.onPressed,
+    this.textSize = 20,
   }) : super(key: key);
   @override
   State<Button> createState() => _ButtonState();
@@ -44,7 +46,7 @@ class _ButtonState extends State<Button> {
           shadowColor: Colors.white,
         ),
         onHover: (value) {
-          String _startText = _text;
+          String _startText = widget.actualText;
           int _textLength = _startText.length;
           int _index = 0;
 
@@ -64,7 +66,7 @@ class _ButtonState extends State<Button> {
         onPressed: widget.onPressed,
         child: Text(
           _text,
-          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
+          style: GoogleFonts.poppins(fontSize: widget.textSize, fontWeight: FontWeight.bold),
         ),
       ),
     );

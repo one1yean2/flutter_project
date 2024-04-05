@@ -5,11 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 class TypeWriter extends StatefulWidget {
   final String actualText;
   final bool typingIndicator;
-
+  final double textSize;
+  final Duration duration;
+  final Color textColor;
   TypeWriter({
     Key? key,
     required this.actualText,
     this.typingIndicator = false,
+    this.textSize = 40,
+    this.duration = const Duration(milliseconds: 200),
+    this.textColor = Colors.black,
   }) : super(key: key);
 
   @override
@@ -31,7 +36,7 @@ class _TypeWriterState extends State<TypeWriter> {
     _typingIndicator = widget.typingIndicator;
     _index = 0;
     _isForward = true;
-    Timer.periodic(Duration(milliseconds: 200), (timer) {
+    Timer.periodic(Duration(milliseconds: widget.duration.inMilliseconds), (timer) {
       if (_isForward) {
         _index++;
         if (_index > _textLength) {
@@ -61,7 +66,16 @@ class _TypeWriterState extends State<TypeWriter> {
           _text = _actualText.substring(0, _index);
         });
       }
+
+      if (_index == _textLength && !_typingIndicator) {
+        timer.cancel();
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -71,8 +85,8 @@ class _TypeWriterState extends State<TypeWriter> {
         child: Text(
           _text,
           style: GoogleFonts.poppins(
-            color: Colors.black,
-            fontSize: 40.0,
+            color: widget.textColor,
+            fontSize: widget.textSize,
             decoration: TextDecoration.none,
             fontWeight: FontWeight.w500,
           ),

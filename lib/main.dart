@@ -1,4 +1,5 @@
 import 'package:Flutter_Project/pages/registerpage.dart';
+import 'package:Flutter_Project/widgets/type_writer.dart';
 
 import '../pages/loginpage.dart';
 

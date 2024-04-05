@@ -13,4 +13,18 @@ class Storage {
   Future<void> write(String key, String value) async {
     await storage.write(key: key, value: value);
   }
+
+  Future<void> deleteAll() async {
+    await storage.deleteAll();
+  }
+
+  Future<String> getName() async {
+    var displayName = await Storage().read(Storage.keyDisplayName);
+
+    if (displayName == null) {
+      return '';
+    } else {
+      return displayName;
+    }
+  }
 }

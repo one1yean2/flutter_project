@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Flutter_Project/widgets/type_writer.dart';
 import 'package:flutter/material.dart';
 
 import '../models/score.dart';
@@ -39,7 +40,12 @@ class _LeaderboardState extends State<Leaderboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: TypeWriter(
+          actualText: 'Leaderboard',
+          textSize: 25,
+        ),
+      ),
       body: _isLoading
           ? CircularProgressIndicator()
           : Column(

@@ -16,22 +16,10 @@ const Users =
             displayName: 'NongYean',
             scores: [
                 {
-                    mode: 'Easy',
-                    score: 100,
-                    time: 5,
-                }
-            ],
-        },
-        {
-            id: 2,
-            username: 'd',
-            password: 'ff',
-            displayName: 'eiei',
-            scores: [
-                {
-                    mode: 'Easy',
-                    score: 100,
-                    time: 5,
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
                 }
             ],
         },
@@ -61,7 +49,7 @@ app.post('/login', function (req, res) {
             secret
         );
         res.status(200).send({
-            token,
+            token :token,
             user: {
                 displayName: user.displayName,
             },
@@ -108,9 +96,9 @@ app.post('/score', function (req, res) {
     if (!user) {
         return;
     }
-    const { mode, score, time } = req.body;
-    user.scores.push({ mode, score, time });
-    res.status(200).send({ score: user.scores });
+    const { id, score, time ,typedText} = req.body;
+    user.scores.push({ id, score, time,typedText});
+    res.status(200).send('{ score: user.scores }');
 });
 app.post('/register', function (req, res) {
     const { username, password, displayName } = req.body;

@@ -81,11 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                   var json = jsonDecode(data);
                   var token = json['token'];
                   var displayName = json['user']['displayName'];
-                  debugPrint('Token: $token, displayName: $displayName');
 
                   var storage = Storage();
-                  storage.write(Storage.keyToken, token);
-                  storage.write(Storage.keyDisplayName, displayName);
+                  await storage.write(Storage.keyDisplayName, displayName);
+                  await storage.write(Storage.keyToken, token);
 
                   Navigator.pushReplacement(
                     context,

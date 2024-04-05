@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import 'storage.dart';
+
 class ApiCaller {
   // static const host = 'http://localhost:3000';
   // static const host = 'https://dummyjson.com';
@@ -26,7 +28,10 @@ class ApiCaller {
 
   Future<String> post(String baseUrl, String endpoint, {required Map<String, dynamic>? params}) async {
     try {
+      var token = await Storage().read(Storage.keyToken);
+      _dio.options.headers["Authorization"] = "Bearer $token";
       final response = await _dio.post('$baseUrl/$endpoint', data: params);
+
       debugPrint(response.data.toString());
       return response.data.toString();
     } catch (e) {
