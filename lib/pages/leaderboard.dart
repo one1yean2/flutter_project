@@ -23,6 +23,10 @@ class _LeaderboardState extends State<Leaderboard> {
     fetchScore();
   }
 
+  void sortUserByGamesAmount() {
+    _users.sort((a, b) => b.scores!.length.compareTo(a.scores!.length));
+  }
+
   Future<void> fetchScore() async {
     try {
       final data = await ApiCaller().get("http://localhost:3000", "score");
@@ -32,6 +36,7 @@ class _LeaderboardState extends State<Leaderboard> {
         _users = list.map((e) => Users.fromJson(e)).toList();
         _isLoading = false;
       });
+      sortUserByGamesAmount();
     } catch (e) {
       print(e);
     }
@@ -46,14 +51,27 @@ class _LeaderboardState extends State<Leaderboard> {
           textSize: 25,
         ),
       ),
-      body: _isLoading
-          ? CircularProgressIndicator()
-          : Column(
-              children: [
-                Text(_users[0].displayName!),
-                Text(_users[1].displayName!),
-              ],
-            ),
+      body: Column(
+        children: [
+          _isLoading
+              ? CircularProgressIndicator()
+              : Expanded(
+                  child: ListView.builder(
+                    itemCount: _users.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          _users[index].displayName!,
+                        ),
+                        subtitle: Text(
+                          "Games : " + _users[index].scores!.length.toString(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }

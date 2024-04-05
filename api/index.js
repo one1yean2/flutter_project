@@ -23,6 +23,51 @@ const Users =
                 }
             ],
         },
+        {
+            id: 2,
+            username: 'test2',
+            password: 'test2',
+            displayName: 'NongYean2',
+            scores: [
+                {
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
+                },
+                {
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
+                },
+                {
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
+                }
+            ],
+        },{
+            id: 3,
+            username: 'test3',
+            password: 'test3',
+            displayName: 'NongYean3',
+            scores: [
+                {
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
+                },
+                {
+                    id: 9999,
+                    score: 9999,
+                    time: 9999,
+                    typedText:'9999'
+                }
+            ],
+        },
     ];
 
 
