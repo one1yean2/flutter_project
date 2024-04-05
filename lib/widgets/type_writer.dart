@@ -4,10 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TypeWriter extends StatefulWidget {
   final String actualText;
+  final bool typingIndicator;
 
   TypeWriter({
     Key? key,
     required this.actualText,
+    this.typingIndicator = false,
   }) : super(key: key);
 
   @override
@@ -15,16 +17,18 @@ class TypeWriter extends StatefulWidget {
 }
 
 class _TypeWriterState extends State<TypeWriter> {
-  String actualText = '';
-  String text = '';
+  String _actualText = '';
+  String _text = '';
+  late bool _typingIndicator;
   late int _textLength;
   late int _index;
   late bool _isForward;
   @override
   void initState() {
     super.initState();
-    actualText = widget.actualText;
-    _textLength = actualText.length;
+    _actualText = widget.actualText;
+    _textLength = _actualText.length;
+    _typingIndicator = widget.typingIndicator;
     _index = 0;
     _isForward = true;
     Timer.periodic(Duration(milliseconds: 200), (timer) {
@@ -43,14 +47,20 @@ class _TypeWriterState extends State<TypeWriter> {
       //     _isForward = true;
       //   }
       // }
-      setState(() {
-        if (text == actualText + "_") {
-          text = actualText;
-        } else {
-          text = actualText.substring(0, _index) + "_";
-        }
-        // text = actualText.substring(0, _index) + "_" + actualText.substring(_index);
-      });
+      if (_typingIndicator) {
+        setState(() {
+          if (_text == _actualText + "_") {
+            _text = _actualText;
+          } else {
+            _text = _actualText.substring(0, _index) + "_";
+          }
+          // text = actualText.substring(0, _index) + "_" + actualText.substring(_index);
+        });
+      } else {
+        setState(() {
+          _text = _actualText.substring(0, _index);
+        });
+      }
     });
   }
 
@@ -59,7 +69,7 @@ class _TypeWriterState extends State<TypeWriter> {
     return Container(
       child: Container(
         child: Text(
-          text,
+          _text,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 40.0,
@@ -68,7 +78,7 @@ class _TypeWriterState extends State<TypeWriter> {
           ),
         ),
       ),
-      alignment: Alignment.center,
+      // alignment: Alignment.center,
     );
   }
 }

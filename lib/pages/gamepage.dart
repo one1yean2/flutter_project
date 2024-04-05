@@ -3,15 +3,16 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../helpers/api_caller.dart';
+import '../services/api_caller.dart';
 import '../models/quotes.dart';
+import 'leaderboard.dart';
 
-class QuoteScreen extends StatefulWidget {
+class GameScreen extends StatefulWidget {
   @override
-  _QuoteScreenState createState() => _QuoteScreenState();
+  _GameScreenState createState() => _GameScreenState();
 }
 
-class _QuoteScreenState extends State<QuoteScreen> {
+class _GameScreenState extends State<GameScreen> {
   QuotesList _quotes = QuotesList();
   bool _isLoading = true;
   int currentIndex = 0;
@@ -22,6 +23,17 @@ class _QuoteScreenState extends State<QuoteScreen> {
   List<TextSpan> _buildTextSpans(String text, String value) {
     final textSpans = <TextSpan>[];
     for (int i = 0; i < text.length; i++) {
+      if (i == value.length) {
+        textSpans.add(
+          TextSpan(
+            text: "|",
+            style: GoogleFonts.poppins(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      }
       textSpans.add(
         TextSpan(
           text: i != value.length
@@ -30,7 +42,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                       ? value[i]
                       : text[i]
                   : text[i]
-              : "|" + text[i],
+              : text[i],
           style: i < value.length
               ? text[i] == value[i]
                   ? GoogleFonts.poppins(
@@ -56,7 +68,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
 
   Future<void> fetchQuotes() async {
     try {
-      final data = await ApiCaller().get("quotes");
+      final data = await ApiCaller().get("https://dummyjson.com", "quotes?skip=5&limit=1");
       setState(() {
         _quotes = QuotesList.fromJson(jsonDecode(data));
         _isLoading = false;
@@ -75,7 +87,6 @@ class _QuoteScreenState extends State<QuoteScreen> {
       ),
       body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Container(
@@ -127,6 +138,9 @@ class _QuoteScreenState extends State<QuoteScreen> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 30,
+                          ),
                           Container(
                               margin: EdgeInsets.only(top: 20),
                               child: TextField(
@@ -138,12 +152,21 @@ class _QuoteScreenState extends State<QuoteScreen> {
                                     _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, value);
                                   });
                                   if (value.length == _quotes.quotes![currentIndex].quote!.length) {
-                                    setState(() {
-                                      currentIndex = currentIndex + 1;
-                                      _currentIndex = 0;
-                                      _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
-                                      textEditingController.clear();
-                                    });
+                                    if (currentIndex == _quotes.quotes!.length - 1) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Leaderboard(),
+                                        ),
+                                      );
+                                    } else {
+                                      setState(() {
+                                        currentIndex = currentIndex + 1;
+                                        _currentIndex = 0;
+                                        _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
+                                        textEditingController.clear();
+                                      });
+                                    }
                                   }
                                   // }
                                 },
@@ -190,52 +213,9 @@ class _QuoteScreenState extends State<QuoteScreen> {
                       ),
                     ),
                   ),
-            // Expanded(
-            //   child: SizedBox(),
-            // ),
           ],
         ),
       ),
-
-      // _isLoading
-      //     ? Container(
-      //         color: Colors.black,
-      //         child: Center(
-      //           child: CircularProgressIndicator(),
-      //         ),
-      //       )
-      //     : ListView.builder(
-      //         itemCount: _quotes.quotes!.length,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           return Column(
-      //             children: [
-      //               Text(
-      //                 _quotes.quotes![index].quote!,
-      //                 style: TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
-      //               ),
-      //               Container(
-      //                 width: 200,
-      //                 margin: EdgeInsets.only(top: 20),
-      //                 child: TextField(
-      //                   autofocus: true,
-      //                   // decoration: InputDecoration(
-      //                   //   hintText: 'Enter your name',
-      //                   //   border: OutlineInputBorder(),
-      //                   // ),
-      //                   onSubmitted: (value) {
-      //                     // Navigator.push(
-      //                     // context,
-      //                     // MaterialPageRoute(
-      //                     // builder: (context) => GamePage(name: value),
-      //                     // ),
-      //                     // );
-      //                   },
-      //                 ),
-      //               ),
-      //             ],
-      //           );
-      //         },
-      //       ),
     );
   }
 }

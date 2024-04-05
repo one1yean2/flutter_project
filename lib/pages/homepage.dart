@@ -1,8 +1,15 @@
 import 'dart:async';
-import '../helpers/type_writer.dart';
+import 'package:Flutter_Project/pages/leaderboard.dart';
+import 'package:Flutter_Project/pages/registerpage.dart';
+import 'package:Flutter_Project/widgets/button.dart';
+
+import '../services/storage.dart';
+import '../widgets/type_writer.dart';
 import '../pages/gamepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'loginpage.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -13,60 +20,86 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   String text = 'Start';
+  String dropdownvalue = 'Register';
+  String username = 'Guest';
+  var items = ['Register', 'Login'];
+  bool name = true;
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 1), () {
+      getName().then((value) {
+        setState(() {
+          username = value;
+          name = false;
+        });
+      });
+    });
+  }
+
+  Future<String> getName() async {
+    var displayName = await Storage().read(Storage.keyDisplayName);
+    debugPrint('displayName: $displayName');
+    return displayName!;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: name
+          ? AppBar()
+          : AppBar(
+              title: TypeWriter(
+                actualText: 'Welcome ${username} !',
+              ),
+              backgroundColor: Colors.white,
+              // foregroundColor: Colors.white,
+              elevation: 20,
+              shadowColor: Colors.white,
+            ),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        elevation: 20,
+        shadowColor: Colors.black,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            // TODO: add navgiation to register and login
+            DrawerHeader(
+              child: Center(child: Container(height: 100, width: 100, child: Icon(Icons.person, size: 100))),
+            ),
+            ListTile(
+                title: Text('Register'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => RegisterPage()));
+                }),
+            ListTile(
+                title: Text('Login'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+                })
+          ],
+        ),
+      ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TypeWriter(actualText: 'Typing Game\n     By One1'),
+            Center(child: TypeWriter(actualText: 'Typing Game\n     By One1', typingIndicator: true)),
             SizedBox(height: 40),
-            Container(
-              width: 200,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
-                  textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  elevation: 10,
-                  shadowColor: Colors.white,
-                ),
-                onHover: (value) {
-                  String startText = 'START';
-                  int textLength = startText.length;
-                  int index = 0;
-                  if (value) {
-                    Timer.periodic(Duration(milliseconds: 60), (timer) {
-                      if (index < textLength) {
-                        index++;
-                      } else {
-                        timer.cancel();
-                      }
-                      setState(() {
-                        text = startText.substring(0, index);
-                      });
-                    });
-                  }
-                },
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuoteScreen(),
-                    ),
-                  );
-                },
-                child: Text(
-                  text,
-                  style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
+            Button(
+              actualText: 'START',
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => GameScreen()));
+              },
+            ),
+            SizedBox(height: 40),
+            Button(
+              actualText: 'Leaderboard',
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => Leaderboard()));
+              },
             ),
           ],
         ),
