@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Flutter_Project/pages/loginpage.dart';
+import 'package:Flutter_Project/widgets/button.dart';
 import 'package:flutter/material.dart';
 import '../services/storage.dart';
 import '../services/api_caller.dart';
@@ -30,34 +31,47 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(
+                child: Container(),
+              ),
               Icon(Icons.security, size: 80.0),
               Text('Register', style: Theme.of(context).textTheme.titleLarge),
               SizedBox(height: 20.0),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter username',
-                  border: OutlineInputBorder(),
+              Container(
+                width: 500,
+                child: TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter username',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  hintText: 'Enter password (***อย่าใช้ password จริง)',
-                  border: OutlineInputBorder(),
+              Container(
+                width: 500,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter password (***อย่าใช้ password จริง)',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
-              TextField(
-                controller: _displayNameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Display Name',
-                  border: OutlineInputBorder(),
+              Container(
+                width: 500,
+                child: TextField(
+                  controller: _displayNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Display Name',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
+              Button(
+                actualText: 'Register',
                 onPressed: () async {
                   if (!click) {
                     click = true;
@@ -88,11 +102,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                   }
                 },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text('Register', textAlign: TextAlign.center),
-                ),
-              )
+                // child: SizedBox(
+                //   width: double.infinity,
+                //   child: Button(actualText: 'Register'onPressed: () {
+
+                //   },),
+                // ),
+              ),
+              Expanded(
+                child: Container(),
+              ),
             ],
           ),
         ));

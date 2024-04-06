@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Flutter_Project/widgets/button.dart';
 import 'package:flutter/material.dart';
 import '../services/storage.dart';
 import '../services/api_caller.dart';
@@ -50,26 +51,38 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(
+                child: Container(),
+              ),
               Icon(Icons.security, size: 80.0),
               Text('LOGIN', style: Theme.of(context).textTheme.titleLarge),
               SizedBox(height: 20.0),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter username',
-                  border: OutlineInputBorder(),
+              Container(
+                width: 500,
+                child: TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter username',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  hintText: 'Enter password',
-                  border: OutlineInputBorder(),
+              Container(
+                width: 500,
+                child: TextField(
+                  // obscureText: true,
+                  // obscuringCharacter: '*',
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter password',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
+              Button(
+                actualText: 'Login',
                 onPressed: () async {
                   if (!click) {
                     click = true;
@@ -105,11 +118,14 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }
                 },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text('Login', textAlign: TextAlign.center),
-                ),
-              )
+                // child: SizedBox(
+                //   width: double.infinity,
+                //   child: Text('Login', textAlign: TextAlign.center),
+                // ),
+              ),
+              Expanded(
+                child: Container(),
+              ),
             ],
           ),
         ));
