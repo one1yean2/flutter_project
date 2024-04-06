@@ -34,7 +34,7 @@ class _LeaderboardState extends State<Leaderboard> {
 
   Future<void> fetchScore() async {
     try {
-      final data = await ApiCaller().get("http://localhost:3000", "score");
+      final data = await ApiCaller().get("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app/", "score");
       List list = jsonDecode(data);
       print(data);
       setState(() {

@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   print('Username: ${_usernameController.text}');
                   print('Password: ${_passwordController.text}');
                   var caller = ApiCaller();
-                  var data = await caller.post("http://localhost:3000", 'register', params: {
+                  var data = await caller.post("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app/", 'register', params: {
                     "username": _usernameController.text,
                     "password": _passwordController.text,
                     "displayName": _displayNameController.text,

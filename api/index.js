@@ -118,4 +118,6 @@ app.post('/register', function (req, res) {
     res.status(201).send(newUser);
 })
 app.listen(3000);
+
+
 export default app;
