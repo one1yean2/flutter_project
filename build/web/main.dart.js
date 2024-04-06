@@ -43116,10 +43116,10 @@ s.toString
 r.x=r.B9(s,this.b)},
 $S:0}
 A.ag6.prototype={
-$1(a){var s,r=null,q=A.aM(0,50,0),p=this.a,o=B.h.k(p.r)
-p=B.h.k(p.d.a[p.f].b.length)
+$1(a){var s,r=null,q=A.aM(0,50,0),p=this.a,o=B.h.k(p.r),n=B.h.k(p.d.a[p.f].b.length)
+p=B.h.k(p.Q)
 s=A.aM(0,50,0)
-return A.anK(A.b([A.Ml(new A.eg("Continue",!1,20,A.aM(0,50,0),B.fD,r),new A.ag2(a),r)],t.D),new A.eg("Your score is "+o+" out of "+p+" characters.",!1,15,s,B.l,r),new A.eg("Complete !",!1,20,q,B.l,r))},
+return A.anK(A.b([A.Ml(new A.eg("Continue",!1,20,A.aM(0,50,0),B.fD,r),new A.ag2(a),r)],t.D),new A.eg("Your score is "+o+" out of "+n+" characters\nTime : "+p,!1,15,s,B.l,r),new A.eg("Complete !",!1,20,q,B.l,r))},
 $S:113}
 A.ag2.prototype={
 $0(){A.fi(this.a,!1).ajh(A.jm(new A.ag1(),null,t.z))},

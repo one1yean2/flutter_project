@@ -268,7 +268,7 @@ class _GameScreenState extends State<GameScreen> {
                                         builder: (context) => AlertDialog(
                                                 title: TypeWriter(actualText: "Complete !", duration: Duration(milliseconds: 50), textSize: 20),
                                                 content: TypeWriter(
-                                                  actualText: "Your score is " + _score.toString() + " out of " + _quotes.quotes![currentIndex].quote!.length.toString() + " characters.",
+                                                  actualText: "Your score is " + _score.toString() + " out of " + _quotes.quotes![currentIndex].quote!.length.toString() + " characters\nTime : " + _time.toString(),
                                                   duration: Duration(milliseconds: 50),
                                                   textSize: 15,
                                                 ),
