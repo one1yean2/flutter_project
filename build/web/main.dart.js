@@ -43045,7 +43045,7 @@ aj8(a,b,c,d,e){var s=0,r=A.Q(t.H),q=1,p,o,n,m
 var $async$zm=A.R(function(f,g){if(f===1){p=g
 s=q}while(true)switch(s){case 0:q=3
 s=6
-return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app/","score",A.aB(["id",a,"score",b,"time",c,"typedText",d,"colorText",e],t.N,t.z)),$async$zm)
+return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app","score",A.aB(["id",a,"score",b,"time",c,"typedText",d,"colorText",e],t.N,t.z)),$async$zm)
 case 6:q=1
 s=5
 break
@@ -43273,7 +43273,7 @@ y6(){var s=0,r=A.Q(t.H),q=1,p,o=this,n,m,l,k,j
 var $async$y6=A.R(function(a,b){if(a===1){p=b
 s=q}while(true)switch(s){case 0:q=3
 s=6
-return A.M(new A.nu().pR(0,"https://myapi-two-swart.vercel.app/","score"),$async$y6)
+return A.M(new A.nu().pR(0,"https://myapi-two-swart.vercel.app","score"),$async$y6)
 case 6:n=b
 m=B.aU.mR(0,n,null)
 A.fw(n)
@@ -43387,7 +43387,7 @@ A.fw("Password: "+o.a.a)
 n=t.z
 h=B.aU
 s=4
-return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app/","login",A.aB(["username",p.a.a,"password",o.a.a],t.N,n)),$async$$0)
+return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app","login",A.aB(["username",p.a.a,"password",o.a.a],t.N,n)),$async$$0)
 case 4:m=h.mR(0,b,null)
 p=J.aq(m)
 s=J.d(p.h(m,"error"),"Username and password are required")?5:7
@@ -43440,7 +43440,7 @@ o=k.e
 A.fw("Password: "+o.a.a)
 n=t.z
 s=4
-return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app/","register",A.aB(["username",p.a.a,"password",o.a.a,"displayName",k.f.a.a],t.N,n)),$async$$0)
+return A.M(new A.nu().nt("https://myapi-two-swart.vercel.app","register",A.aB(["username",p.a.a,"password",o.a.a,"displayName",k.f.a.a],t.N,n)),$async$$0)
 case 4:m=b
 A.k7().$1(m)
 l=B.aU.mR(0,m,null)
