@@ -15,7 +15,27 @@ const Users =
             password: 'test',
             displayName: 'NongYean',
             scores: [
-                
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                }
 
             ],
         },
@@ -25,7 +45,19 @@ const Users =
             password: 'test2',
             displayName: 'NongNa',
             scores: [
-
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },            {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                }
             ],
         },
         {
@@ -34,7 +66,13 @@ const Users =
             password: 'test3',
             displayName: 'NongKla',
             scores: [
-
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
             ],
         },
         {
@@ -43,7 +81,20 @@ const Users =
             password: 'test4',
             displayName: 'NoFF',
             scores: [
-
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                }
             ],
         },
         {
@@ -52,7 +103,34 @@ const Users =
             password: 'test5',
             displayName: 'NongTEST',
             scores: [
-
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                },
+                {
+                    "id": 1167,
+                    "score": 99,
+                    "time": 12,
+                    "typedText": "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.",
+                    "colorText": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+                }
             ],
         }
 
@@ -157,4 +235,4 @@ app.post('/register', function (req, res) {
 app.listen(3000);
 
 
-// export default app;
+export default app;
