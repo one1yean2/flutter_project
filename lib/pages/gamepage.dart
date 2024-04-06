@@ -187,7 +187,7 @@ class _GameScreenState extends State<GameScreen> {
                 Center(
                   child: Container(
                     child: Text(
-                      _score.toString(),
+                      "SCORE : " + _score.toString(),
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 30,
@@ -201,7 +201,7 @@ class _GameScreenState extends State<GameScreen> {
                 Center(
                   child: Container(
                     child: Text(
-                      _time.toString(),
+                      "TIMER : " + _time.toString(),
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 30,
