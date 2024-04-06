@@ -37,6 +37,7 @@ class _GameScreenState extends State<GameScreen> {
   String colorText = '';
   bool start = false;
   int _time = 0;
+  var isRead = false;
   late Timer _timer;
 
   String? checkText(String text, String value, int index) {
@@ -208,6 +209,7 @@ class _GameScreenState extends State<GameScreen> {
                             child: TextField(
                               controller: textEditingController,
                               autofocus: true,
+                              readOnly: isRead,
                               maxLength: _quotes.quotes![currentIndex].quote!.length,
                               onChanged: (value) async {
                                 //start Timer
@@ -228,6 +230,9 @@ class _GameScreenState extends State<GameScreen> {
                                   },
                                 );
                                 if (value.length == _quotes.quotes![currentIndex].quote!.length) {
+                                  setState(() {
+                                    isRead = true;
+                                  });
                                   _timer.cancel();
                                   await postScore(_quotes.quotes![currentIndex].id!, _score, _time, value, colorText);
 
