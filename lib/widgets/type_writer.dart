@@ -44,14 +44,7 @@ class _TypeWriterState extends State<TypeWriter> {
           _isForward = false;
         }
       }
-      // if (!_isForward) {
-      //   _index--;
-      //   // if (_index < Random().nextInt(_textLength)) {
-      //   if (_index < 0) {
-      //     _index++;
-      //     _isForward = true;
-      //   }
-      // }
+
       if (_typingIndicator) {
         setState(() {
           if (_text == _actualText + "_") {
@@ -59,7 +52,6 @@ class _TypeWriterState extends State<TypeWriter> {
           } else {
             _text = _actualText.substring(0, _index) + "_";
           }
-          // text = actualText.substring(0, _index) + "_" + actualText.substring(_index);
         });
       } else {
         setState(() {

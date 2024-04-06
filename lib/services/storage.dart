@@ -18,6 +18,12 @@ class Storage {
     await storage.deleteAll();
   }
 
+  Future<bool> checkToken() async {
+    var token = await Storage().read(Storage.keyToken);
+    // debugPrint('Token: $token');
+    return token != null;
+  }
+
   Future<String> getName() async {
     var displayName = await Storage().read(Storage.keyDisplayName);
 

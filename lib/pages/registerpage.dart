@@ -67,10 +67,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     "password": _passwordController.text,
                     "displayName": _displayNameController.text,
                   });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const LoginPage()),
-                  );
+                  debugPrint(data);
+                  var json = jsonDecode(data);
+                  //popup error fill all fields or username already exists
+                  if (json['error'] == 'Username already exists') {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Username already exists'),
+                    ));
+                  } else if (json['error'] == 'Username, password and display name are required') {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Username, password and display name are required'),
+                    ));
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginPage()),
+                    );
+                  }
                 },
                 child: SizedBox(
                   width: double.infinity,

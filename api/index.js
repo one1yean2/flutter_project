@@ -15,59 +15,10 @@ const Users =
             password: 'test',
             displayName: 'NongYean',
             scores: [
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                }
+
             ],
-        },
-        {
-            id: 2,
-            username: 'test2',
-            password: 'test2',
-            displayName: 'NongYean2',
-            scores: [
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                },
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                },
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                }
-            ],
-        },{
-            id: 3,
-            username: 'test3',
-            password: 'test3',
-            displayName: 'NongYean3',
-            scores: [
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                },
-                {
-                    id: 9999,
-                    score: 9999,
-                    time: 9999,
-                    typedText:'9999'
-                }
-            ],
-        },
+        }
+
     ];
 
 
@@ -79,7 +30,7 @@ app.get('/', function (req, res) {
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
     if (!username || !password) {
-        res.status(400).send("Username and password are required");
+        res.status(200).send({error:"Username and password are required"});
         return;
     }
 
@@ -100,7 +51,7 @@ app.post('/login', function (req, res) {
             },
         });
     } else {
-        res.status(401).send("Unauthorized");
+        res.status(200).send({error:"Not Found"});
     }
 });
 
@@ -141,19 +92,19 @@ app.post('/score', function (req, res) {
     if (!user) {
         return;
     }
-    const { id, score, time ,typedText} = req.body;
-    user.scores.push({ id, score, time,typedText});
+    const { id, score, time ,typedText,colorText} = req.body;
+    user.scores.push({ id, score, time,typedText,colorText});
     res.status(200).send('{ score: user.scores }');
 });
 app.post('/register', function (req, res) {
     const { username, password, displayName } = req.body;
     if (!username || !password || !displayName) {
-        res.status(400).send("Username, password and display name are required");
+        res.status(200).send({error:"Username, password and display name are required"});
         return;
     }
     const user = Users.find((user) => user.username === username);
     if (user) {
-        res.status(409).send("Username already exists");
+        res.status(200).send({error:"Username already exists"});
         return;
     }
     const newUser = {

@@ -79,17 +79,28 @@ class _LoginPageState extends State<LoginPage> {
                     "password": _passwordController.text,
                   });
                   var json = jsonDecode(data);
-                  var token = json['token'];
-                  var displayName = json['user']['displayName'];
 
-                  var storage = Storage();
-                  await storage.write(Storage.keyDisplayName, displayName);
-                  await storage.write(Storage.keyToken, token);
+                  if (json['error'] == 'Username and password are required') {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Username and password are required'),
+                    ));
+                  } else if (json['error'] == "Not Found") {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('User Not Found'),
+                    ));
+                  } else {
+                    var token = json['token'];
+                    var displayName = json['user']['displayName'];
 
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const Homepage()),
-                  );
+                    var storage = Storage();
+                    await storage.write(Storage.keyDisplayName, displayName);
+                    await storage.write(Storage.keyToken, token);
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Homepage()),
+                    );
+                  }
                 },
                 child: SizedBox(
                   width: double.infinity,

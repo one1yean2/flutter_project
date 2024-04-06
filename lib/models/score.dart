@@ -15,21 +15,27 @@ class Users {
 }
 
 class Scores {
-  String? mode;
+  int? id;
   int? score;
   int? time;
+  String? typedText;
+  String? colorText;
 
   Scores({
-    this.mode,
+    this.id,
     this.score,
     this.time,
+    this.typedText,
+    this.colorText,
   });
 
   factory Scores.fromJson(Map<String, dynamic> json) {
     return Scores(
-      mode: json['mode'],
+      id: json['id'],
       score: json['score'],
       time: json['time'],
+      typedText: json['typedText'],
+      colorText: json['colorText'],
     );
   }
 }

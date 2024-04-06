@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:Flutter_Project/pages/homepage.dart';
+import 'package:Flutter_Project/widgets/type_writer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,9 +14,11 @@ import 'leaderboard.dart';
 class GameScreen extends StatefulWidget {
   final int skip;
   final int limit;
+  final String appBarText;
 
   GameScreen({
     Key? key,
+    required this.appBarText,
     required this.skip,
     required this.limit,
   }) : super(key: key);
@@ -30,7 +34,10 @@ class _GameScreenState extends State<GameScreen> {
   int _score = 0;
   TextEditingController textEditingController = TextEditingController();
   List<TextSpan> _textSpans = [];
-  String textColor = '';
+  String colorText = '';
+  bool start = false;
+  int _time = 0;
+  late Timer _timer;
 
   String? checkText(String text, String value, int index) {
     if (index != value.length) {
@@ -53,7 +60,7 @@ class _GameScreenState extends State<GameScreen> {
       if (text[index] == value[index]) {
         setState(() {
           _score++;
-          textColor += 'G';
+          colorText += 'G';
         });
         return GoogleFonts.poppins(
           color: Colors.green,
@@ -61,7 +68,7 @@ class _GameScreenState extends State<GameScreen> {
         );
       } else {
         setState(() {
-          textColor += 'R';
+          colorText += 'R';
         });
         return GoogleFonts.poppins(
           color: Colors.red,
@@ -116,13 +123,14 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
-  Future<void> postScore(int id, int score, int time, String typedText) async {
+  Future<void> postScore(int id, int score, int time, String typedText, String colorText) async {
     try {
       var data = await ApiCaller().post("http://localhost:3000", 'score', params: {
         "id": id,
         "score": score,
         "time": time,
         "typedText": typedText,
+        "colorText": colorText,
       });
     } catch (e) {
       print(e);
@@ -133,7 +141,11 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quotes'),
+        title: TypeWriter(
+          actualText: widget.appBarText,
+          duration: Duration(milliseconds: 50),
+          textSize: 20,
+        ),
       ),
       body: Center(
         child: Column(
@@ -169,17 +181,36 @@ class _GameScreenState extends State<GameScreen> {
             // Expanded(
             //   child: SizedBox(),
             // ),
-            Center(
-              child: Container(
-                child: Text(
-                  _score.toString(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    child: Text(
+                      _score.toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                      ),
+                    ),
                   ),
+                ).animate().slide(duration: Duration(seconds: 1)).fadeIn(duration: Duration(seconds: 1)),
+                SizedBox(
+                  width: 50,
                 ),
-              ),
-            ).animate().slide(duration: Duration(seconds: 1)).fadeIn(duration: Duration(seconds: 1)),
+                Center(
+                  child: Container(
+                    child: Text(
+                      _time.toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ).animate().slide(duration: Duration(seconds: 1)).fadeIn(duration: Duration(seconds: 1)),
+              ],
+            ),
 
             _isLoading
                 ? CircularProgressIndicator()
@@ -208,28 +239,63 @@ class _GameScreenState extends State<GameScreen> {
                             child: TextField(
                               controller: textEditingController,
                               autofocus: true,
-                              onChanged: (value) {
+                              onChanged: (value) async {
+                                //start Timer
+                                if (!start) {
+                                  start = true;
+                                  _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+                                    setState(() {
+                                      _time = _time + 1;
+                                    });
+                                  });
+                                }
+
                                 setState(
                                   () {
                                     _score = 0;
-                                    textColor = '';
+                                    colorText = '';
                                     _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, value);
                                   },
                                 );
                                 if (value.length == _quotes.quotes![currentIndex].quote!.length) {
-                                  postScore(_quotes.quotes![currentIndex].id!, _score, 999, value);
+                                  _timer.cancel();
+                                  await postScore(_quotes.quotes![currentIndex].id!, _score, _time, value, colorText);
+
                                   if (currentIndex == _quotes.quotes!.length - 1) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Leaderboard(),
-                                      ),
-                                    );
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                                title: TypeWriter(actualText: "Complete !", duration: Duration(milliseconds: 50), textSize: 20),
+                                                content: TypeWriter(
+                                                  actualText: "Your score is " + _score.toString() + " out of " + _quotes.quotes![currentIndex].quote!.length.toString() + " characters.",
+                                                  duration: Duration(milliseconds: 50),
+                                                  textSize: 15,
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      child: TypeWriter(
+                                                        actualText: "Continue",
+                                                        duration: Duration(milliseconds: 50),
+                                                        textSize: 20,
+                                                        textColor: Colors.green,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder: (context) => Homepage(),
+                                                          ),
+                                                        );
+                                                      })
+                                                ]));
+                                    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                    //   builder: (context) => Homepage(),
+                                    // ));
                                   } else {
                                     setState(
                                       () {
                                         currentIndex = currentIndex + 1;
-
+                                        start = false;
+                                        _time = 0;
                                         _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
                                         textEditingController.clear();
                                       },
