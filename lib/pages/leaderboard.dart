@@ -131,7 +131,7 @@ class _LeaderboardState extends State<Leaderboard> {
                                   // });
 
                                   return AlertDialog(
-                                    title: Text("GAME " + (SFindex + 1).toString()),
+                                    title: Text("GAME " + (_users[index].scores!.length - (SFindex)).toString()),
 
                                     // : ElevatedButton.styleFrom(
                                     //   shape: RoundedRectangleBorder(),
@@ -151,16 +151,16 @@ class _LeaderboardState extends State<Leaderboard> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Score : " + _users[index].scores![SFindex].score.toString() + "/" + _users[index].scores![SFindex].typedText!.length.toString(),
+                                            "Score : " + _users[index].scores![_users[index].scores!.length - (SFindex + 1)].score.toString() + "/" + _users[index].scores![_users[index].scores!.length - (SFindex + 1)].typedText!.length.toString(),
                                             style: TextStyle(fontSize: 16.0, color: Colors.black),
                                           ),
                                           Text(
-                                            "Time : " + _users[index].scores![SFindex].time.toString() + "\n",
+                                            "Time : " + _users[index].scores![_users[index].scores!.length - (SFindex + 1)].time.toString() + "\n",
                                             style: TextStyle(fontSize: 16.0, color: Colors.black),
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                              children: coloringText(_users[index].scores![SFindex].typedText, _users[index].scores![SFindex].colorText),
+                                              children: coloringText(_users[index].scores![_users[index].scores!.length - (SFindex + 1)].typedText, _users[index].scores![_users[index].scores!.length - (SFindex + 1)].colorText),
                                             ),
 
                                             // style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black),
