@@ -117,5 +117,5 @@ app.post('/register', function (req, res) {
     Users.push(newUser);
     res.status(201).send(newUser);
 })
-
-app.listen(3000);
+export default app;
+// app.listen(3000);
