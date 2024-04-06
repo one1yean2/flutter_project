@@ -7,6 +7,7 @@ class ApiCaller {
   // static const host = 'http://localhost:3000';
   // static const host = 'https://dummyjson.com';
   // static const baseUrl = '$host';
+  static const host = 'https://api-fgtd.onrender.com';
   static final _dio = Dio(BaseOptions(responseType: ResponseType.plain));
 
   Future<String> get(String baseUrl, String endpoint, {Map<String, dynamic>? params}) async {

@@ -125,7 +125,7 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> postScore(int id, int score, int time, String typedText, String colorText) async {
     try {
-      var data = await ApiCaller().post("https://myapi-seven-sigma.vercel.app", 'score', params: {
+      var data = await ApiCaller().post(ApiCaller.host, 'score', params: {
         "id": id,
         "score": score,
         "time": time,
@@ -151,36 +151,6 @@ class _GameScreenState extends State<GameScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Container(
-            //   alignment: Alignment.topCenter,
-            //   width: double.maxFinite,
-            //   color: Colors.black,
-            //   height: 60,
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(50),
-            //           color: Colors.lightGreenAccent[400],
-            //         ),
-            //         margin: EdgeInsets.all(4),
-            //         child: Center(
-            //             child: Text(
-            //           '1',
-            //           style: TextStyle(
-            //             color: Colors.black,
-            //             fontSize: 20,
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         )),
-            //         width: 50,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Expanded(
-            //   child: SizedBox(),
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -211,7 +181,6 @@ class _GameScreenState extends State<GameScreen> {
                 ).animate().slide(duration: Duration(seconds: 1)).fadeIn(duration: Duration(seconds: 1)),
               ],
             ),
-
             _isLoading
                 ? CircularProgressIndicator()
                 : Padding(
@@ -268,7 +237,7 @@ class _GameScreenState extends State<GameScreen> {
                                         builder: (context) => AlertDialog(
                                                 title: TypeWriter(actualText: "Complete !", duration: Duration(milliseconds: 50), textSize: 20),
                                                 content: TypeWriter(
-                                                  actualText: "Your score is " + _score.toString() + " out of " + _quotes.quotes![currentIndex].quote!.length.toString() + " characters\nTime : " + _time.toString(),
+                                                  actualText: "Your score is " + _score.toString() + " out of " + _quotes.quotes![currentIndex].quote!.length.toString() + " characters",
                                                   duration: Duration(milliseconds: 50),
                                                   textSize: 15,
                                                 ),

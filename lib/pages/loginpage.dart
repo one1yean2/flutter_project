@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     print('Username: ${_usernameController.text}');
                     print('Password: ${_passwordController.text}');
                     var caller = ApiCaller();
-                    var data = await caller.post("https://myapi-seven-sigma.vercel.app", 'login', params: {
+                    var data = await caller.post(ApiCaller.host, 'login', params: {
                       "username": _usernameController.text,
                       "password": _passwordController.text,
                     });
