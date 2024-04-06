@@ -96,10 +96,12 @@ class _LoginPageState extends State<LoginPage> {
                     var json = jsonDecode(data);
 
                     if (json['error'] == 'Username and password are required') {
+                      click = false;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Username and password are required'),
                       ));
                     } else if (json['error'] == "Not Found") {
+                      click = false;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('User Not Found'),
                       ));

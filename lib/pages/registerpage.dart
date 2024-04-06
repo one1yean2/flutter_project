@@ -87,10 +87,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     var json = jsonDecode(data);
                     //popup error fill all fields or username already exists
                     if (json['error'] == 'Username already exists') {
+                      click = false;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Username already exists'),
                       ));
                     } else if (json['error'] == 'Username, password and display name are required') {
+                      click = false;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Username, password and display name are required'),
                       ));

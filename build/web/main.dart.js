@@ -43366,45 +43366,47 @@ A.ahA.prototype={
 $1(a){return B.mG},
 $S:67}
 A.ahz.prototype={
-$0(){var s=0,r=A.Q(t.H),q=this,p,o,n,m,l,k,j,i
+$0(){var s=0,r=A.Q(t.H),q=this,p,o,n,m,l,k,j,i,h
 var $async$$0=A.R(function(a,b){if(a===1)return A.N(b,r)
-while(true)switch(s){case 0:j=q.a
-s=!j.f?2:3
+while(true)switch(s){case 0:i=q.a
+s=!i.f?2:3
 break
-case 2:j.f=!0
-p=j.d
+case 2:i.f=!0
+p=i.d
 A.fw("Username: "+p.a.a)
-j=j.e
-A.fw("Password: "+j.a.a)
-o=t.z
-i=B.aU
+o=i.e
+A.fw("Password: "+o.a.a)
+n=t.z
+h=B.aU
 s=4
-return A.M(new A.nu().nt("https://api-fgtd.onrender.com","login",A.aB(["username",p.a.a,"password",j.a.a],t.N,o)),$async$$0)
-case 4:n=i.mR(0,b,null)
-j=J.aq(n)
-s=J.d(j.h(n,"error"),"Username and password are required")?5:7
+return A.M(new A.nu().nt("https://api-fgtd.onrender.com","login",A.aB(["username",p.a.a,"password",o.a.a],t.N,n)),$async$$0)
+case 4:m=h.mR(0,b,null)
+p=J.aq(m)
+s=J.d(p.h(m,"error"),"Username and password are required")?5:7
 break
-case 5:j=q.b.ab(t.Pu)
-j.toString
-j.f.qb(B.Lz)
+case 5:i.f=!1
+i=q.b.ab(t.Pu)
+i.toString
+i.f.qb(B.Lz)
 s=6
 break
-case 7:p=q.b
-s=J.d(j.h(n,"error"),"Not Found")?8:10
+case 7:o=q.b
+s=J.d(p.h(m,"error"),"Not Found")?8:10
 break
-case 8:j=p.ab(t.Pu)
-j.toString
-j.f.qb(B.Ly)
+case 8:i.f=!1
+i=o.ab(t.Pu)
+i.toString
+i.f.qb(B.Ly)
 s=9
 break
-case 10:m=j.h(n,"token")
-l=J.bl(j.h(n,"user"),"displayName")
-k=new A.jE(A.o1())
+case 10:l=p.h(m,"token")
+k=J.bl(p.h(m,"user"),"displayName")
+j=new A.jE(A.o1())
 s=11
-return A.M(k.uz(0,"displayName",l),$async$$0)
+return A.M(j.uz(0,"displayName",k),$async$$0)
 case 11:s=12
-return A.M(k.uz(0,"token",m),$async$$0)
-case 12:A.aoS(p,A.jm(new A.ahy(),null,o))
+return A.M(j.uz(0,"token",l),$async$$0)
+case 12:A.aoS(o,A.jm(new A.ahy(),null,n))
 case 9:case 6:case 3:return A.O(null,r)}})
 return A.P($async$$0,r)},
 $S:29}
@@ -43434,13 +43436,15 @@ return A.M(new A.nu().nt("https://api-fgtd.onrender.com","register",A.aB(["usern
 case 4:m=b
 A.k7().$1(m)
 l=B.aU.mR(0,m,null)
-k=J.aq(l)
-if(J.d(k.h(l,"error"),"Username already exists")){k=q.b.ab(t.Pu)
+p=J.aq(l)
+if(J.d(p.h(l,"error"),"Username already exists")){k.r=!1
+k=q.b.ab(t.Pu)
 k.toString
-k.f.qb(B.LB)}else{p=q.b
-if(J.d(k.h(l,"error"),u.l)){k=p.ab(t.Pu)
+k.f.qb(B.LB)}else{o=q.b
+if(J.d(p.h(l,"error"),u.l)){k.r=!1
+k=o.ab(t.Pu)
 k.toString
-k.f.qb(B.LA)}else A.aoS(p,A.jm(new A.aiG(),null,n))}case 3:return A.O(null,r)}})
+k.f.qb(B.LA)}else A.aoS(o,A.jm(new A.aiG(),null,n))}case 3:return A.O(null,r)}})
 return A.P($async$$0,r)},
 $S:29}
 A.aiG.prototype={
