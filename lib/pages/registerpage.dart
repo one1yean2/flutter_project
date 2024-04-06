@@ -44,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  hintText: 'Enter password',
+                  hintText: 'Enter password (***อย่าใช้ password จริง)',
                   border: OutlineInputBorder(),
                 ),
               ),
