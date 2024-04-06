@@ -34,7 +34,7 @@ class _LeaderboardState extends State<Leaderboard> {
 
   Future<void> fetchScore() async {
     try {
-      final data = await ApiCaller().get("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app/", "score");
+      final data = await ApiCaller().get("https://myapi-seven-sigma.vercel.app", "score");
       List list = jsonDecode(data);
       print(data);
       setState(() {
@@ -92,7 +92,7 @@ class _LeaderboardState extends State<Leaderboard> {
       body: Column(
         children: [
           _isLoading
-              ? CircularProgressIndicator()
+              ? Center(child: CircularProgressIndicator())
               : Expanded(
                   child: ListView.builder(
                     itemCount: _users.length,

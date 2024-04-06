@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var _usernameController = TextEditingController();
   var _passwordController = TextEditingController();
-
+  bool click = false;
   @override
   void initState() {
     super.initState();
@@ -71,35 +71,38 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  print('Username: ${_usernameController.text}');
-                  print('Password: ${_passwordController.text}');
-                  var caller = ApiCaller();
-                  var data = await caller.post("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app/", 'login', params: {
-                    "username": _usernameController.text,
-                    "password": _passwordController.text,
-                  });
-                  var json = jsonDecode(data);
+                  if (!click) {
+                    click = true;
+                    print('Username: ${_usernameController.text}');
+                    print('Password: ${_passwordController.text}');
+                    var caller = ApiCaller();
+                    var data = await caller.post("https://myapi-seven-sigma.vercel.app", 'login', params: {
+                      "username": _usernameController.text,
+                      "password": _passwordController.text,
+                    });
+                    var json = jsonDecode(data);
 
-                  if (json['error'] == 'Username and password are required') {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Username and password are required'),
-                    ));
-                  } else if (json['error'] == "Not Found") {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('User Not Found'),
-                    ));
-                  } else {
-                    var token = json['token'];
-                    var displayName = json['user']['displayName'];
+                    if (json['error'] == 'Username and password are required') {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Username and password are required'),
+                      ));
+                    } else if (json['error'] == "Not Found") {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('User Not Found'),
+                      ));
+                    } else {
+                      var token = json['token'];
+                      var displayName = json['user']['displayName'];
 
-                    var storage = Storage();
-                    await storage.write(Storage.keyDisplayName, displayName);
-                    await storage.write(Storage.keyToken, token);
+                      var storage = Storage();
+                      await storage.write(Storage.keyDisplayName, displayName);
+                      await storage.write(Storage.keyToken, token);
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Homepage()),
-                    );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const Homepage()),
+                      );
+                    }
                   }
                 },
                 child: SizedBox(

@@ -125,7 +125,7 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> postScore(int id, int score, int time, String typedText, String colorText) async {
     try {
-      var data = await ApiCaller().post("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app", 'score', params: {
+      var data = await ApiCaller().post("https://myapi-seven-sigma.vercel.app", 'score', params: {
         "id": id,
         "score": score,
         "time": time,
@@ -239,6 +239,7 @@ class _GameScreenState extends State<GameScreen> {
                             child: TextField(
                               controller: textEditingController,
                               autofocus: true,
+                              maxLength: _quotes.quotes![currentIndex].quote!.length,
                               onChanged: (value) async {
                                 //start Timer
                                 if (!start) {

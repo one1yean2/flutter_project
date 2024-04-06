@@ -17,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var _usernameController = TextEditingController();
   var _passwordController = TextEditingController();
   var _displayNameController = TextEditingController();
-
+  bool click = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,30 +59,33 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  print('Username: ${_usernameController.text}');
-                  print('Password: ${_passwordController.text}');
-                  var caller = ApiCaller();
-                  var data = await caller.post("https://myapi-qmq8xqnim-wannueng-yoosomboons-projects.vercel.app/", 'register', params: {
-                    "username": _usernameController.text,
-                    "password": _passwordController.text,
-                    "displayName": _displayNameController.text,
-                  });
-                  debugPrint(data);
-                  var json = jsonDecode(data);
-                  //popup error fill all fields or username already exists
-                  if (json['error'] == 'Username already exists') {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Username already exists'),
-                    ));
-                  } else if (json['error'] == 'Username, password and display name are required') {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Username, password and display name are required'),
-                    ));
-                  } else {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const LoginPage()),
-                    );
+                  if (!click) {
+                    click = true;
+                    print('Username: ${_usernameController.text}');
+                    print('Password: ${_passwordController.text}');
+                    var caller = ApiCaller();
+                    var data = await caller.post("https://myapi-seven-sigma.vercel.app", 'register', params: {
+                      "username": _usernameController.text,
+                      "password": _passwordController.text,
+                      "displayName": _displayNameController.text,
+                    });
+                    debugPrint(data);
+                    var json = jsonDecode(data);
+                    //popup error fill all fields or username already exists
+                    if (json['error'] == 'Username already exists') {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Username already exists'),
+                      ));
+                    } else if (json['error'] == 'Username, password and display name are required') {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Username, password and display name are required'),
+                      ));
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginPage()),
+                      );
+                    }
                   }
                 },
                 child: SizedBox(
