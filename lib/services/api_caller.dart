@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'storage.dart';
 
 class ApiCaller {
-  // static const host = 'http://localhost:3000';
-  // static const host = 'https://dummyjson.com';
-  // static const baseUrl = '$host';
   static const host = 'https://myapi-two-swart.vercel.app';
   static final _dio = Dio(BaseOptions(responseType: ResponseType.plain));
 

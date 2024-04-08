@@ -19,7 +19,6 @@ class Leaderboard extends StatefulWidget {
 
 class _LeaderboardState extends State<Leaderboard> {
   List<Users> _users = [];
-
   bool _isLoading = true;
 
   @override

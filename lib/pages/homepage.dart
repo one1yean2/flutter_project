@@ -27,14 +27,13 @@ class _HomepageState extends State<Homepage> {
   String username = '';
   var items = ['Register', 'Login'];
   bool hasLoggedIn = false;
-  bool test = true;
-  // QuotesList _quotes = QuotesList();
-  // bool _isLoading = true;
+  bool clickChoice = true;
   bool isSelect = true;
+
   @override
   void initState() {
     super.initState();
-    // fetchQuotes();
+
     Storage().getName().then((value) {
       setState(() {
         username = value;
@@ -43,21 +42,68 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  // Future<void> fetchQuotes() async {
-  //   try {
-  //     final data = await ApiCaller().get("https://dummyjson.com", "quotes?skip=0&limit=0");
-  //     setState(() {
-  //       _quotes = QuotesList.fromJson(jsonDecode(data));
-  //       _isLoading = false;
-  //       // _textSpans = _buildTextSpans(_quotes.quotes![currentIndex].quote!, '');
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
   Future<void> deleteStorage() async {
     await Storage().deleteAll();
+  }
+
+  Drawer buildDrawer() {
+    return Drawer(
+      backgroundColor: Colors.white,
+      elevation: 20,
+      shadowColor: Colors.black,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            child: Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Icon(Icons.person, size: 100),
+              ),
+            ),
+          ),
+          hasLoggedIn && username != ''
+              ? Container()
+              : ListTile(
+                  title: TypeWriter(
+                    actualText: 'REGISTER',
+                    textSize: 25,
+                    duration: Duration(milliseconds: 60),
+                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => RegisterPage()));
+                  }),
+          hasLoggedIn && username != ''
+              ? Container()
+              : ListTile(
+                  title: TypeWriter(
+                    actualText: 'LOGIN',
+                    textSize: 25,
+                    duration: Duration(milliseconds: 50),
+                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+                  }),
+          hasLoggedIn && username != ''
+              ? ListTile(
+                  title: TypeWriter(
+                    actualText: 'LOGOUT',
+                    textSize: 25,
+                    duration: Duration(milliseconds: 40),
+                    textColor: Colors.red,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      deleteStorage();
+                      hasLoggedIn = false;
+                    });
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => Homepage()));
+                  })
+              : Container(),
+        ],
+      ),
+    );
   }
 
   @override
@@ -72,63 +118,7 @@ class _HomepageState extends State<Homepage> {
               ),
             )
           : AppBar(),
-      drawer: Drawer(
-        backgroundColor: Colors.white,
-        elevation: 20,
-        shadowColor: Colors.black,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Center(
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: Icon(Icons.person, size: 100),
-                ),
-              ),
-            ),
-            hasLoggedIn && username != ''
-                ? Container()
-                : ListTile(
-                    title: TypeWriter(
-                      actualText: 'REGISTER',
-                      textSize: 25,
-                      duration: Duration(milliseconds: 60),
-                    ),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => RegisterPage()));
-                    }),
-            hasLoggedIn && username != ''
-                ? Container()
-                : ListTile(
-                    title: TypeWriter(
-                      actualText: 'LOGIN',
-                      textSize: 25,
-                      duration: Duration(milliseconds: 50),
-                    ),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
-                    }),
-            hasLoggedIn && username != ''
-                ? ListTile(
-                    title: TypeWriter(
-                      actualText: 'LOGOUT',
-                      textSize: 25,
-                      duration: Duration(milliseconds: 40),
-                      textColor: Colors.red,
-                    ),
-                    onTap: () {
-                      setState(() {
-                        deleteStorage();
-                        hasLoggedIn = false;
-                      });
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => Homepage()));
-                    })
-                : Container(),
-          ],
-        ),
-      ),
+      drawer: buildDrawer(),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,11 +131,11 @@ class _HomepageState extends State<Homepage> {
               actualText: 'MODES',
               onPressed: () {
                 setState(() {
-                  test = !test;
+                  clickChoice = !clickChoice;
                 });
               },
             ).animate(delay: Duration(milliseconds: 500)).fadeIn(duration: Duration(seconds: 1)).slide(duration: Duration(seconds: 1), begin: Offset(0, 5)),
-            test
+            clickChoice
                 ? Container()
                 : Container(
                     child: ListView.builder(
@@ -184,62 +174,6 @@ class _HomepageState extends State<Homepage> {
                                           setState(() {
                                             isSelect = !isSelect;
                                           });
-                                          //popup input text
-                                          // showDialog(
-                                          //   context: context,
-                                          //   builder: (builder) => AlertDialog(
-                                          //     content: Column(
-                                          //       children: [
-                                          //         TypeWriter(
-                                          //           actualText: "Enter Quote Number",
-                                          //           textSize: 20,
-                                          //           duration: Duration(milliseconds: 40),
-                                          //           textColor: Colors.black,
-                                          //         ),
-                                          // TextField(onChanged: (value) {}),
-                                          // _isLoading
-                                          //     ? CircularProgressIndicator()
-                                          //     : Expanded(
-                                          //         child: ListView.builder(
-                                          //           shrinkWrap: true,
-                                          //           itemCount: 2,
-                                          //           itemBuilder: (context, index) {
-                                          //             return AlertDialog.adaptive(
-                                          //               content: TextButton(
-                                          //                 child: Text('Select'),
-                                          //                 style: ButtonStyle(
-                                          //                   backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
-                                          //                   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                          //                 ),
-                                          //                 onPressed: () {
-                                          //                   Navigator.push(
-                                          //                       context,
-                                          //                       MaterialPageRoute(
-                                          //                           builder: (_) => GameScreen(
-                                          //                                 appBarText: 'Select Quote',
-                                          //                                 skip: Random().nextInt(1454),
-                                          //                                 limit: 1,
-                                          //                               )));
-                                          //                 },
-                                          //               ),
-                                          //             );
-                                          //           },
-                                          //         ),
-                                          //       )
-                                          //       ],
-                                          //     ),
-                                          //   ),
-                                          // );
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (_) => GameScreen(
-                                          //       appBarText: 'Select Quote',
-                                          //       skip: Random().nextInt(1454),
-                                          //       limit: 1,
-                                          //     ),
-                                          //   ),
-                                          // );
                                         },
                                       )),
                           ).animate(delay: Duration(milliseconds: 500 * index)).fadeIn(duration: Duration(seconds: 1)).slideX(duration: Duration(seconds: 1), begin: 0);
@@ -293,16 +227,6 @@ class _HomepageState extends State<Homepage> {
               onPressed: () {
                 Storage().checkToken().then((value) {
                   if (!value) {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: TypeWriter(actualText: 'Login first to see leaderboard.', duration: Duration(milliseconds: 0), textSize: 25),
-                    //     backgroundColor: Colors.red,
-                    //     duration: Duration(seconds: 1),
-                    //   ),
-
-                    // );
-
-                    // popup login first text
                     showDialog<void>(
                       context: context,
                       builder: (builder) => AlertDialog(

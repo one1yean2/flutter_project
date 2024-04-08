@@ -95,6 +95,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
         );
       }
+
       textSpans.add(
         TextSpan(
           text: checkText(text, value, i),
@@ -114,6 +115,7 @@ class _GameScreenState extends State<GameScreen> {
   Future<void> fetchQuotes() async {
     try {
       final data = await ApiCaller().get("https://dummyjson.com", "quotes?skip=${widget.skip}&limit=${widget.limit}");
+
       setState(() {
         _quotes = QuotesList.fromJson(jsonDecode(data));
         _isLoading = false;
@@ -234,6 +236,7 @@ class _GameScreenState extends State<GameScreen> {
                                     isRead = true;
                                   });
                                   _timer.cancel();
+
                                   await postScore(_quotes.quotes![currentIndex].id!, _score, _time, value, colorText);
 
                                   if (currentIndex == _quotes.quotes!.length - 1) {
